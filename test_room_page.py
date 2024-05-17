@@ -53,7 +53,7 @@ class Test_Room_Page:
         self.actions.w3c_actions.pointer_action.click()
         self.actions.perform()
 
-    def test_side_menu(self):
+    def side_menu(self):
         time.sleep(1)
         favorites_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeButton[@label=\"Favourites\"]/XCUIElementTypeGroup/XCUIElementTypeGroup/XCUIElementTypeGroup[1]")
         favorites_bt.click()
@@ -66,14 +66,16 @@ class Test_Room_Page:
         assert friend_text.is_displayed(), "friends page is not displayed"
         otherroom_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeButton[@label=\"Other rooms\"]/XCUIElementTypeGroup/XCUIElementTypeGroup/XCUIElementTypeGroup[1]")
         otherroom_bt.click()
+        time.sleep(1)
         otherroom_text = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeStaticText[@value=\"Rooms\"]")
         assert otherroom_text.is_displayed(), "group page is not displayed"
         settings_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeButton[@label=\"Quick settings\"]")
         settings_bt.click()
         settings_text = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeStaticText[@value=\"Quick settings\"]")
         assert settings_text.is_displayed(), "settings page is not displayed"
-        allsettings_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeWebView/XCUIElementTypeGroup[7]/XCUIElementTypeGroup/XCUIElementTypeGroup[2]/XCUIElementTypeButton[1]")
+        allsettings_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeGroup[2]/XCUIElementTypeButton[1]")
         allsettings_bt.click()
+        time.sleep(1)
         close_bt = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="label == \"Close dialog\"")
         close_bt.click()
         time.sleep(1)
@@ -109,7 +111,7 @@ class Test_Room_Page:
         open_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeSheet[@label=\"打開\"]/XCUIElementTypeButton[2]")
         open_bt.click()
         time.sleep(1)
-        up_load_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeWebView/XCUIElementTypeGroup[9]/XCUIElementTypeGroup/XCUIElementTypeGroup[1]/XCUIElementTypeGroup[2]/XCUIElementTypeButton")
+        up_load_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeGroup[2]/XCUIElementTypeButton")
         up_load_bt.click()
         time.sleep(1)
         file_message = self.driver.find_element(by=AppiumBy.XPATH, value="(//XCUIElementTypeStaticText[@value=\"測試報告_0811.xlsx (108.24 kB)\"])")
@@ -118,7 +120,7 @@ class Test_Room_Page:
         open_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeSheet[@label=\"打開\"]/XCUIElementTypeButton[2]")
         open_bt.click()
         time.sleep(1)
-        up_load_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeWebView/XCUIElementTypeGroup[9]/XCUIElementTypeGroup/XCUIElementTypeGroup[1]/XCUIElementTypeGroup[2]/XCUIElementTypeButton")
+        up_load_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeGroup[2]/XCUIElementTypeButton")
         up_load_bt.click()
         time.sleep(1)
         image_message = self.driver.find_element(by=AppiumBy.XPATH, value="(//XCUIElementTypeImage[@label=\"pepe.jpeg\"])")
@@ -159,7 +161,9 @@ class Test_Room_Page:
         time.sleep(1)
         file_history = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeWebView/XCUIElementTypeGroup[1]/XCUIElementTypeGroup[1]/XCUIElementTypeGroup/XCUIElementTypeGroup[3]/XCUIElementTypeGroup/XCUIElementTypeGroup[6]")
         assert file_history.is_displayed(), "file page is not displayed"
-        self.ckick_coordinate(1890, 85)
+        self.ckick_coordinate(1595, 85) #back 
+        time.sleep(1)
+        self.ckick_coordinate(1890, 85) #close
         assert  not file_history.is_displayed(), "file page is not collapsed"                  
 
     def leave_room(self, leave_type):
@@ -167,7 +171,7 @@ class Test_Room_Page:
         room_options.click()
         self.ckick_coordinate(*leave_type)
         time.sleep(1)
-        leave_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeWebView/XCUIElementTypeGroup[9]/XCUIElementTypeGroup/XCUIElementTypeGroup[1]/XCUIElementTypeGroup[2]/XCUIElementTypeButton[2]")
+        leave_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeGroup[2]/XCUIElementTypeButton[2]")
         leave_bt.click()
         time.sleep(1)
         assert self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="value == \"Welcome to Shaberi\"").is_displayed(), "leave room is not sucess"
@@ -179,6 +183,8 @@ class Test_Room_Page:
         time.sleep(1)
         member_list = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeWebView/XCUIElementTypeGroup[1]/XCUIElementTypeGroup[1]/XCUIElementTypeGroup/XCUIElementTypeGroup[3]/XCUIElementTypeGroup/XCUIElementTypeGroup[6]")
         assert member_list.is_displayed(), "member list is not displayed"
+        self.ckick_coordinate(1595, 85) #back 
+        time.sleep(1)
         self.ckick_coordinate(1890, 85)
         assert not member_list.is_displayed(), "member lis is not collapsed"
     
@@ -200,10 +206,35 @@ class Test_Room_Page:
         link_message = self.driver.find_element(by=AppiumBy.XPATH, value="(//XCUIElementTypeLink[@label=\"https://shaberi.com/#/!75252551296:shaberi.com?kind=RoomId\"])")
         assert link_message .is_displayed(), "copy link is not success"
 
+    def share_room(self):
+        room_info = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="label == \"Room info\"")
+        room_info.click()
+        self.ckick_coordinate(1660, 340) # Share room option
+        time.sleep(1)
+        share_room_text = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="value == \"Share Room\"")
+        share_room_qrcode = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="label == \"QR Code\"")
+        assert share_room_text.is_displayed(), "share room text is not displayed"
+        assert share_room_qrcode.is_displayed(), "qrcode is not displayed"
+        close_bt = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="label == \"Close dialog\"")
+        close_bt.click()
+        time.sleep(1)
+        self.ckick_coordinate(1890, 85) #close
+        
+    def room_setting_popup(self):
+        room_info = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="label == \"Room info\"")
+        room_info.click()
+        self.ckick_coordinate(1660, 380) # Share room option
+        time.sleep(1)
+        general_text = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="value == \"General\"")
+        assert general_text.is_displayed(), "setting popup is not displayed"
+
+    def test_side_menu(self):
+        self.side_menu()
+
     def test_send_message_personal(self):
         self.send_message(self.personal_room)
     
-    def send_emoji_personal(self):
+    def test_send_emoji_personal(self):
         self.send_emoji()
 
     def test_send_attachment_personal(self):
@@ -224,7 +255,7 @@ class Test_Room_Page:
     def test_send_message_group(self):
         self.send_message(self.group_room)
 
-    def send_emoji_group(self):
+    def test_send_emoji_group(self):
         self.send_emoji()
 
     def test_send_attachment_group(self):
@@ -244,6 +275,14 @@ class Test_Room_Page:
 
     def test_copy_room_link(self):
         self.copy_room_link()
+
+    def test_share_room(self):
+        self.share_room()
+
+    def test_room_setting_popup(self):
+        self.room_setting_popup()
+        close_bt = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="label == \"Close dialog\"")
+        close_bt.click()
 
     def test_leave_group(self):
         self.leave_room(self.group_leave)
