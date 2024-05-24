@@ -38,7 +38,7 @@ class Test_Room_Page:
         self.group_favorite = (481, 134)
         self.personal_favorite_room = "//XCUIElementTypeGroup[@label=\"Favourites\"]/XCUIElementTypeGroup/XCUIElementTypeGroup/XCUIElementTypeOutlineRow[@label=\"testfrandy\"]"
         self.group_favorite_room = "//XCUIElementTypeGroup[@label=\"Favourites\"]/XCUIElementTypeGroup/XCUIElementTypeGroup/XCUIElementTypeOutlineRow[@label=\"Autogroup\"]"
-        self.personal_cancell_favorite_room = "//XCUIElementTypeGroup[@label=\"People\"]/XCUIElementTypeGroup/XCUIElementTypeGroup/XCUIElementTypeOutlineRow[@label=\"testfrandy\"]" #被還原後的個人聊天室
+        self.personal_cancell_favorite_room = "//XCUIElementTypeGroup[@label=\"Friends\"]/XCUIElementTypeGroup/XCUIElementTypeGroup/XCUIElementTypeOutlineRow[@label=\"testfrandy\"]" #被還原後的個人聊天室
         self.group_cancell_favorite_room = "//XCUIElementTypeGroup[@label=\"Rooms\"]/XCUIElementTypeGroup/XCUIElementTypeGroup/XCUIElementTypeOutlineRow[@label=\"Autogroup\"]" #被還原後得群聊
         self.personal_file = (481, 134)
         self.group_file = (481, 214)
@@ -55,16 +55,16 @@ class Test_Room_Page:
 
     def side_menu(self):
         time.sleep(1)
-        favorites_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeButton[@label=\"Favourites\"]/XCUIElementTypeGroup/XCUIElementTypeGroup/XCUIElementTypeGroup[1]")
+        favorites_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeButton[@label=\"Favourites\"]")
         favorites_bt.click()
         favorites_text = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="value == \"Favourites\"")
         assert favorites_text.is_displayed(), "favourites page is not displayed"
-        friend_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeButton[@label=\"People\"]/XCUIElementTypeGroup/XCUIElementTypeGroup/XCUIElementTypeGroup[1]")
+        friend_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeButton[@label=\"Friends\"]")
         friend_bt.click()
         time.sleep(1)
-        friend_text = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeStaticText[@value=\"People\"]")
+        friend_text = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeStaticText[@value=\"Friends\"]")
         assert friend_text.is_displayed(), "friends page is not displayed"
-        otherroom_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeButton[@label=\"Other rooms\"]/XCUIElementTypeGroup/XCUIElementTypeGroup/XCUIElementTypeGroup[1]")
+        otherroom_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeButton[@label=\"Other rooms\"]")
         otherroom_bt.click()
         time.sleep(1)
         otherroom_text = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeStaticText[@value=\"Rooms\"]")

@@ -65,7 +65,7 @@ class Test_People_Page:
         add_friend_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeGroup[5]/XCUIElementTypeGroup/XCUIElementTypeButton")
         add_friend_bt.click()
         time.sleep(1)
-        friend = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeGroup[@label=\"People\"]/XCUIElementTypeGroup/XCUIElementTypeGroup/XCUIElementTypeOutlineRow[@label=\"testfrandy\"]")
+        friend = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeGroup[@label=\"Friends\"]//XCUIElementTypeOutlineRow[@label=\"testfrandy\"]")
         assert friend.is_displayed(), "add friend is not success"
 
     def join_group(self):
