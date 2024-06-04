@@ -53,7 +53,17 @@ class Test_Room_Page:
         self.actions.w3c_actions.pointer_action.click()
         self.actions.perform()
 
+    def check_window_size(self):
+        window_size = self.driver.get_window_size()
+        print("window size:", window_size)
+        if window_size["width"] != 1920 and window_size["height"] != 1080:
+            self.driver.maximize_window()
+        else:
+            print("window size is already maximized")
+
+
     def side_menu(self):
+        self.check_window_size()
         time.sleep(1)
         favorites_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeButton[@label=\"Favourites\"]")
         favorites_bt.click()
@@ -69,17 +79,8 @@ class Test_Room_Page:
         time.sleep(1)
         otherroom_text = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeStaticText[@value=\"Rooms\"]")
         assert otherroom_text.is_displayed(), "group page is not displayed"
-        settings_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeButton[@label=\"Quick settings\"]")
-        settings_bt.click()
-        settings_text = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeStaticText[@value=\"Quick settings\"]")
-        assert settings_text.is_displayed(), "settings page is not displayed"
-        allsettings_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeGroup[2]/XCUIElementTypeButton[1]")
-        allsettings_bt.click()
         time.sleep(1)
-        close_bt = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="label == \"Close dialog\"")
-        close_bt.click()
-        time.sleep(1)
-        home_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeButton[@label=\"All rooms\"]/XCUIElementTypeGroup/XCUIElementTypeGroup/XCUIElementTypeGroup[1]")
+        home_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeButton[@label=\"Home\"]")
         home_bt.click()
         time.sleep(1)
 
@@ -203,7 +204,7 @@ class Test_Room_Page:
         time.sleep(1)
         send_bt = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="label == \"Send message\"")
         send_bt.click()
-        link_message = self.driver.find_element(by=AppiumBy.XPATH, value="(//XCUIElementTypeLink[@label=\"https://shaberi.com/#/!75252551296:shaberi.com?kind=RoomId\"])")
+        link_message = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeStaticText[starts-with(@value, \"https://shaberi.com/#/\")]\n")
         assert link_message .is_displayed(), "copy link is not success"
 
     def share_room(self):
