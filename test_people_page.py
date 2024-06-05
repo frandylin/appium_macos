@@ -64,7 +64,7 @@ class Test_People_Page:
         assert user_name.is_displayed() , "cant search for user"
         add_friend_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeGroup[5]/XCUIElementTypeGroup/XCUIElementTypeButton")
         add_friend_bt.click()
-        time.sleep(1)
+        time.sleep(2)
         friend = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeGroup[@label=\"Friends\"]//XCUIElementTypeOutlineRow[@label=\"testfrandy\"]")
         assert friend.is_displayed(), "add friend is not success"
 
@@ -74,7 +74,7 @@ class Test_People_Page:
         time.sleep(1)
         join_group_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeWebView/XCUIElementTypeGroup[1]/XCUIElementTypeGroup[1]/XCUIElementTypeGroup/XCUIElementTypeGroup[3]/XCUIElementTypeGroup/XCUIElementTypeButton")
         join_group_bt.click()
-        time.sleep(1)
+        time.sleep(3)
         group = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeGroup[@label=\"Rooms\"]/XCUIElementTypeGroup/XCUIElementTypeGroup/XCUIElementTypeOutlineRow[@label=\"Autogroup\"]")
         assert group.is_displayed, "join group is not success"
 
@@ -90,7 +90,7 @@ class Test_People_Page:
         topic_textbox.send_keys("Appium testing")
         create_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeGroup[2]/XCUIElementTypeButton[2]")
         create_bt.click()
-        time.sleep(2)
+        time.sleep(3)
         name_text = self.driver.find_element(by=AppiumBy.XPATH, value="(//XCUIElementTypePopUpButton[@label=\"Room options\"]/XCUIElementTypeStaticText/XCUIElementTypeStaticText[@value=\"Appium Fucking Lets gooo\"])")
         topic_text = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="value == \"Appium testing\"")
         assert  name_text.is_displayed(), "create room failed"
@@ -129,11 +129,12 @@ class Test_People_Page:
         time.sleep(1)
         invite_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeGroup[3]/XCUIElementTypeButton")
         invite_bt.click()
-        time.sleep(1)
+        time.sleep(2)
         invite_message = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="value == \"frandy invited testfrandy\"")
         assert invite_message.is_displayed(), "invite member to room is not success"
         room_options = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypePopUpButton[@label=\"Room options\"]")
         room_options.click()
+        time.sleep(1)
         self.ckick_coordinate(481 , 334)
         time.sleep(1)
         leave_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeGroup[2]/XCUIElementTypeButton[2]")
@@ -147,11 +148,11 @@ class Test_People_Page:
          search_bt.click()
          self.text_friend_name()
          time.sleep(1)
-         friend = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="value == \"testfrandy@kgrxey4b3jf7:shaberi.com\"")
+         friend = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeStaticText[@value=\"testfrandy\"]")
          assert friend.is_displayed(), "search friend is not success"
          
     def enter_room_from_search(self):
-        friend = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="value == \"testfrandy@kgrxey4b3jf7:shaberi.com\"")
+        friend = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeStaticText[@value=\"testfrandy\"]")
         friend.click()
         time.sleep(1)
         friend_room = self.driver.find_element(by=AppiumBy.XPATH, value="(//XCUIElementTypePopUpButton[@label=\"Room options\"]/XCUIElementTypeStaticText/XCUIElementTypeStaticText[@value=\"testfrandy\"])")

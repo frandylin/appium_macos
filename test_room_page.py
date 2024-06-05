@@ -174,7 +174,7 @@ class Test_Room_Page:
         time.sleep(1)
         leave_bt = self.driver.find_element(by=AppiumBy.XPATH, value="//XCUIElementTypeGroup[2]/XCUIElementTypeButton[2]")
         leave_bt.click()
-        time.sleep(1)
+        time.sleep(2)
         assert self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="value == \"Welcome to Shaberi\"").is_displayed(), "leave room is not sucess"
 
     def member_list(self):

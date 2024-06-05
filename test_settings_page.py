@@ -33,6 +33,31 @@ class Test_Settings_Page:
         self.actions = ActionChains(self.driver)
         self.actions.w3c_actions = ActionBuilder(self.driver, mouse=PointerInput(interaction.POINTER_MOUSE, 'mouse'))
         self.wait = WebDriverWait(self.driver, 10)
+        self.profile = "Profile"
+        self.introduction = "Introduction"
+        self.language = "Language and region"
+        self.theme = "Theme"
+        self.font_size = "Font size"
+        self.image_size = "Image size in the timeline"
+        self.global_text = "Global"
+        self.mention = "Mentions & keywords"
+        self.other = "Other"
+        self.room_list = "Room list"
+        self.displaying_time = "Displaying time"
+        self.presence = "Presence"
+        self.send_message = "Send message"
+        self.new_line = "New line"
+        self.toggle_bold = "Toggle Bold"
+        self.home = "Home"
+        self.favourites = "Favourites"
+        self.friends = "Friends"
+        self.voice = "Voice settings"
+        self.video = "Video settings"
+        self.processing = "Voice processing"
+        self.account = "Account"
+        self.device_name = "device name"
+        self.online = "last time online"
+        self.version = "2.0.8"
 
     def teardown_method(self):
         self.driver.quit()
@@ -93,12 +118,25 @@ class Test_Settings_Page:
         english_text = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="value == \"Friends\"")
         english_text.is_displayed(), "english text is not displayed."
 
-
+    def change_settings_page(self, sort, element1, element2, element3):
+        self.open_settings_page()
+        tab_page = self.driver.find_element(by=AppiumBy.XPATH, value=f"//XCUIElementTypeWebView/XCUIElementTypeGroup[8]/XCUIElementTypeGroup/XCUIElementTypeGroup[1]/XCUIElementTypeGroup[2]/XCUIElementTypeGroup[2]/XCUIElementTypeGroup[1]/XCUIElementTypeButton[{sort}]")
+        tab_page.click()
+        time.sleep(1)
+        element1 = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value=f"value == \"{element1}\"")
+        element2 = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value=f"value == \"{element2}\"")
+        element3 = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value=f"value == \"{element3}\"")
+        assert element1.is_displayed() and element2.is_displayed() and element3.is_displayed(), "elements is not displayed"
+        close_bt = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="label == \"Close dialog\"")
+        close_bt.click()
+        time.sleep(1)
 
 
 
     def test_open_settings_page(self):
         self.open_settings_page()
+        close_bt = self.driver.find_element(by=AppiumBy.IOS_PREDICATE, value="label == \"Close dialog\"")
+        close_bt.click()
 
     def test_change_display_name(self):
         self.change_display_name("frandy_appium_test")
@@ -110,3 +148,29 @@ class Test_Settings_Page:
     def test_change_language_English(self):
         self.change_language_English()
     
+    def test_settings_page_general(self):
+        self.change_settings_page(1, self.profile, self.introduction, self.language)
+
+    def test_settings_page_appearance(self):
+        self.change_settings_page(2, self.theme, self.font_size, self.image_size)
+
+    def test_settings_page_notifications(self):
+        self.change_settings_page(3, self.global_text, self.mention, self.other)
+
+    def test_settings_page_preferences(self):
+        self.change_settings_page(4, self.room_list, self.displaying_time, self.presence)
+
+    def test_settings_page_keyboard(self):
+        self.change_settings_page(5, self.send_message, self.new_line, self.toggle_bold)
+
+    def test_settings_page_sidebar(self):
+        self.change_settings_page(6, self.home, self.favourites, self.friends)
+
+    def test_settings_page_voice(self):
+        self.change_settings_page(7, self.voice, self.video, self.processing)
+
+    def test_settings_page_security(self):
+        self.change_settings_page(8, self.account, self.device_name, self.online)
+
+    def test_settings_page_about(self):
+        self.change_settings_page(9, self.version, self.version, self.version)
